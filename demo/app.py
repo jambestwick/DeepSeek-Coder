@@ -5,7 +5,7 @@ from typing import Iterator
 import gradio as gr
 import spaces
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
+from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer, AutoConfig
 
 MAX_MAX_NEW_TOKENS = 2048
 DEFAULT_MAX_NEW_TOKENS = 1024
@@ -23,9 +23,14 @@ if not torch.cuda.is_available():
 
 
 if torch.cuda.is_available():
-    model_id = "deepseek-ai/deepseek-coder-6.7b-instruct"
-    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map="auto")
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    #model_id = "deepseek-ai/deepseek-coder-6.7b-instruct"
+    model_path = "/home/hwtec/pythonWorkSpace/DeepSeek-R1-Distill-Qwen-14B"
+    # 注册自定义架构
+
+    #model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map="auto")
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    model = AutoModelForCausalLM.from_pretrained(model_path)
+
     tokenizer.use_default_system_prompt = False
     
 
